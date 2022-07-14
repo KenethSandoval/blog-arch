@@ -5,5 +5,7 @@ module.exports = {
     extend: {},
   },
   plugins: [require('@tailwindcss/typography')],
-  purge: ['./src/components/**/*.tsx','./src/pages/**/*.tsx']
+  purge: ['./src/components/**/*.tsx','./src/pages/**/*.tsx'],
+	darkMode: "class",
+	mode: "jit"
 }
