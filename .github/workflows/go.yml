@@ -1,0 +1,22 @@
+name: go
+
+on:
+  push:
+    branches: [dev]
+  pull_request:
+    branches: [dev]
+
+jobs:
+
+  server-client:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: action/checkout@v2
+      - name: Setup Go
+        uses: action/setup-go@v2
+        with:
+          go-version: 1.18
+
+      - name: Run
+        working-directory: ./backend
+        run: make
