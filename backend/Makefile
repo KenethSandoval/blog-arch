@@ -1,13 +1,14 @@
 # command docker
 
 # development
-clear:
-	@clear
+#clear:
+#	@clear
 
-dev-echo: clear
-	@go run cmd/echo/main.go
+#dev-echo: clear
+#	@go run cmd/echo/main.go
 
-dev-cli: clear
+dev-cli:
 	@go run cmd/cli/main.go
 
 
+.PHONY: dev-cli
