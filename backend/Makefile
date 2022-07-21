@@ -1,8 +1,9 @@
-SHELL = /bin/bash
+# command docker
 
-all: run
+# development
 
-run:
-	go run client/main.go
+dev-echo:
+	@go run cmd/echo/main.go
 
-.PHONY: all
+dev-cli:
+	@go run cmd/cli/main.go

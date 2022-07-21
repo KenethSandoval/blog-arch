@@ -17,6 +17,6 @@ jobs:
         with:
           go-version: 1.18
 
-      - name: Run
+      - name: Run-cli
         working-directory: ./backend
-        run: make
+        run: make dev-cli
