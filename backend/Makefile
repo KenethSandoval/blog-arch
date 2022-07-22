@@ -7,3 +7,6 @@ dev-echo:
 
 dev-cli:
 	@go run cmd/cli/main.go
+
+test:
+	@go test ./internal/...
