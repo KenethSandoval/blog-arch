@@ -6,7 +6,6 @@ import Prerequisites from '../../components/Prerequisites';
 import Stacks from '../../components/Stacks';
 import { useMdxComponentsContext } from '../../context/mdxContext';
 import { useEffect } from 'react';
-import Thumbnail from '../../components/Thumbnail';
 import { ParsedUrlQuery } from 'querystring';
 import { getAllFiles, getFileBySlug } from '../../lib/mdx';
 
@@ -26,7 +25,6 @@ const PostPage: React.FC<Props> = ({ source, frontMatter} : Props) => {
 
 	useEffect(() => {
 		setPrerequisites(frontMatter.prerequisites);
-
 		setStacks(frontMatter.stacks);
 	}, [
 		setPrerequisites,
@@ -38,10 +36,6 @@ const PostPage: React.FC<Props> = ({ source, frontMatter} : Props) => {
 	return (
 		<div>
 			<article className="prose prose-green dark:text-slate-300">
-				<div className="mb-4">
-					<Thumbnail title={frontMatter.title} src={frontMatter.thumbnail} />
-				</div>
-
 				<h1 className="dark:text-slate-300">{frontMatter.title}</h1>
 
 				<p>{frontMatter.description}</p>
