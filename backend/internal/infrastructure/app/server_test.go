@@ -16,3 +16,4 @@ func TestHTTPErrorNotFound(t *testing.T) {
 	assert.Equal(t, http.StatusNotFound, code)
 	assert.Equal(t, "{\"message\":\"Not Found\"}\n", body)
 }
+
