@@ -12,6 +12,7 @@ import (
 
 	"github.com/KenethSandoval/doc-md/internal/config"
 	"github.com/KenethSandoval/doc-md/internal/infrastructure/app"
+	"github.com/KenethSandoval/doc-md/internal/infrastructure/mongodb"
 	"github.com/joho/godotenv"
 )
 
@@ -22,7 +23,13 @@ func main() {
 
 	cfg := config.New()
 
-	e := app.New(cfg)
+	mongoDB := mongodb.New(cfg)
+
+	if err := mongoDB.Connect(); err != nil {
+		log.Fatal("Error connect mongo db")
+	}
+
+	e := app.New(cfg, mongoDB)
 
 	go func() {
 		if err := e.Start(":" + cfg.Port); err != nil && err != http.ErrServerClosed {
@@ -38,6 +45,7 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 
 	defer cancel()
+	defer mongoDB.Close()
 
 	fmt.Println("💥 shutdown server ...")
 
