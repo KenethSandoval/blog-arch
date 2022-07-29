@@ -8,5 +8,11 @@ dev-echo:
 dev-cli:
 	@go run cmd/cli/main.go
 
+dev-grpc:
+	@go run cmd/grpc/main.go
+
 test:
 	@go test ./internal/...
+
+proto:
+	protoc --go_out=. --go-grpc_out=. api/protobuf/**
