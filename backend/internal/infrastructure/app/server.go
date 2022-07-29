@@ -1,26 +1,31 @@
 package app
 
 import (
-        repository "github.com/KenethSandoval/doc-md/internal/adapter/mongorepo"
-        "github.com/KenethSandoval/doc-md/internal/config"
-        "github.com/KenethSandoval/doc-md/internal/domain/usecase"
-        "github.com/KenethSandoval/doc-md/internal/infrastructure/app/handler"
-        "github.com/KenethSandoval/doc-md/internal/infrastructure/mongodb"
-        echo "github.com/labstack/echo/v4"
+	repository "github.com/KenethSandoval/doc-md/internal/adapter/mongorepo"
+	"github.com/KenethSandoval/doc-md/internal/config"
+	"github.com/KenethSandoval/doc-md/internal/domain/usecase"
+	"github.com/KenethSandoval/doc-md/internal/infrastructure/app/handler"
+	"github.com/KenethSandoval/doc-md/internal/infrastructure/mongodb"
+	"github.com/KenethSandoval/doc-md/pkg/validation"
+	echo "github.com/labstack/echo/v4"
 )
 
 func New(cfg *config.Config, dbm *mongodb.MongoDB) *echo.Echo {
-        e := echo.New()
+	e := echo.New()
+	v := validation.New()
 
-        arr := repository.NewArticleMongo(dbm.GetDB())
+	e.Validator = v
 
-        aru := usecase.NewArticleUseCase(arr)
+	arr := repository.NewArticleMongo(dbm.GetDB())
 
-        h := handler.New(handler.HandlerConfig{
-                ArticleUseCase: aru,
-        })
+	aru := usecase.NewArticleUseCase(arr)
 
-        e.POST("/articles", h.CreateArticle)
+	h := handler.New(handler.HandlerConfig{
+		Validator:      v,
+		ArticleUseCase: aru,
+	})
 
-        return e
+	e.POST("/articles", h.CreateArticle)
+
+	return e
 }
