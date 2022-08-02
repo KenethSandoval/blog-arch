@@ -1,11 +1,23 @@
 package handler
 
-import "github.com/KenethSandoval/doc-md/internal/infrastructure/rpc/pb"
+import (
+	"github.com/KenethSandoval/doc-md/internal/domain/port"
+	"github.com/KenethSandoval/doc-md/internal/infrastructure/rpc/pb"
+)
 
-type Handler struct {
-	pb.AuthServiceServer
-}
+type (
+	Handler struct {
+		pb.AuthServiceServer
+		aut port.AuthUseCase
+	}
 
-func New() *Handler {
-	return &Handler{}
+	HandlerConfig struct {
+		AuthUseCase port.AuthUseCase
+	}
+)
+
+func New(hc HandlerConfig) *Handler {
+	return &Handler{
+		aut: hc.AuthUseCase,
+	}
 }

@@ -30,7 +30,7 @@ var registerCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		fmt.Print("Register successfully ", res.GetStatus)
+		fmt.Printf("Register successfully %v", res)
 		return nil
 	},
 }
