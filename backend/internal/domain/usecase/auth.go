@@ -15,18 +15,17 @@ func NewAuthUseCase(atu port.AuthRepository) port.AuthUseCase {
 	return &authUseCase{atu}
 }
 
-// change a authPayload
 func (atu *authUseCase) Register(ctx context.Context, payload domain.RegisterPayload) error {
-	//TODO: hash password
-	data := domain.Register{
+	data := domain.User{
 		ID:       payload.ID,
 		Username: payload.Username,
 		Password: payload.Password,
+		Role:     payload.Role,
 	}
 
 	return atu.authRepo.Register(ctx, data)
 }
 
-func (atu *authUseCase) GetUserByUsername(ctx context.Context, username string) (*domain.Register, error) {
+func (atu *authUseCase) GetUserByUsername(ctx context.Context, username string) (*domain.User, error) {
 	return atu.authRepo.GetByUsername(ctx, username)
 }

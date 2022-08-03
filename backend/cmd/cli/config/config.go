@@ -15,6 +15,7 @@ const SendFileName = "data.yml"
 type DataSend struct {
 	Username string `yaml:"username"`
 	Password string `yaml:"password"`
+	Role     string `yaml:"role"`
 }
 
 type ConfigParser struct{}
@@ -28,6 +29,7 @@ func (parser ConfigParser) getDefaultData() Data {
 		DataSend{
 			Username: "",
 			Password: "",
+			Role:     "",
 		},
 	}
 }

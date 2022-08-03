@@ -17,7 +17,7 @@ func NewRegisterMongo(dbm *mongo.Database) port.AuthRepository {
 	return &authMongo{dbm}
 }
 
-func (adm *authMongo) Register(ctx context.Context, data domain.Register) error {
+func (adm *authMongo) Register(ctx context.Context, data domain.User) error {
 	table := data.TableName()
 
 	if _, err := adm.db.Collection(table).InsertOne(ctx, data); err != nil {
@@ -27,8 +27,8 @@ func (adm *authMongo) Register(ctx context.Context, data domain.Register) error 
 }
 
 // TODO: register for user
-func (adm *authMongo) GetByUsername(ctx context.Context, username string) (*domain.Register, error) {
-	result := &domain.Register{}
+func (adm *authMongo) GetByUsername(ctx context.Context, username string) (*domain.User, error) {
+	result := &domain.User{}
 	table := result.TableName()
 	filter := bson.M{"username": username}
 

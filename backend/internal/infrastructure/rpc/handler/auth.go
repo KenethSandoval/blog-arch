@@ -33,6 +33,7 @@ func (h *Handler) Register(ctx context.Context, req *pb.RegisterRequest) (*pb.Re
 		ID:       primitive.NewObjectID(),
 		Username: req.GetUsername(),
 		Password: passwordEncrypt,
+		Role:     req.GetRole(),
 	}
 
 	if err := h.aut.Register(ctx, payload); err != nil {

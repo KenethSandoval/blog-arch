@@ -8,10 +8,10 @@ import (
 
 type AuthUseCase interface {
 	Register(context.Context, domain.RegisterPayload) error
-	GetUserByUsername(context.Context, string) (*domain.Register, error)
+	GetUserByUsername(context.Context, string) (*domain.User, error)
 }
 
 type AuthRepository interface {
-	Register(context.Context, domain.Register) error
-	GetByUsername(context.Context, string) (*domain.Register, error)
+	Register(context.Context, domain.User) error
+	GetByUsername(context.Context, string) (*domain.User, error)
 }

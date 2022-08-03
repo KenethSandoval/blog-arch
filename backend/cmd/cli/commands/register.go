@@ -23,6 +23,7 @@ var registerCmd = &cobra.Command{
 		payload := &pb.RegisterRequest{
 			Username: data.Body.Username,
 			Password: data.Body.Password,
+			Role:     data.Body.Role,
 		}
 
 		res, err := client.Register(context.TODO(), payload)

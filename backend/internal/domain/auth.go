@@ -7,23 +7,25 @@ import (
 )
 
 var (
-	ErrUserNotFound = errors.New("user not fount")
+	ErrUserNotFound = errors.New("user not found")
 )
 
 type (
-	Register struct {
+	User struct {
 		ID       primitive.ObjectID `bson:"_id"`
 		Username string             `bson:"username"`
 		Password string             `bson:"password"`
+		Role     string             `bson:"role"`
 	}
 
 	RegisterPayload struct {
 		ID       primitive.ObjectID `bson:"id"`
 		Username string             `bson:"username"`
 		Password string             `bson:"password"`
+		Role     string             `bson:"role"`
 	}
 )
 
-func (Register) TableName() string {
+func (User) TableName() string {
 	return "users"
 }
