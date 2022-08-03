@@ -19,11 +19,15 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+		"baseUrl": "./",
+    "paths": {
+      "@components/*": ["./src/components/*"],
+      "@global-stores/*": ["./src/global-stores/*"]
+      "@types/*": ["./src/types/*"]
+    }
   },
-  "include": [
-    "src"
-  ],
+	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": [
     "node_modules"
   ]
