@@ -1,6 +1,14 @@
 package domain
 
-import "go.mongodb.org/mongo-driver/bson/primitive"
+import (
+	"errors"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
+
+var (
+	ErrUserNotFound = errors.New("user not fount")
+)
 
 type (
 	Register struct {

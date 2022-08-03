@@ -11,6 +11,16 @@ import (
 )
 
 func (h *Handler) Register(ctx context.Context, req *pb.RegisterRequest) (*pb.RegisterResponse, error) {
+
+	user, _ := h.aut.GetUserByUsername(ctx, req.GetUsername())
+
+	if user != nil {
+		return &pb.RegisterResponse{
+			Status: http.StatusBadRequest,
+			Error:  "Username already exists",
+		}, nil
+	}
+
 	passwordEncrypt, err := bcrypt.HashPassword(req.GetPassword())
 	if err != nil {
 		return &pb.RegisterResponse{

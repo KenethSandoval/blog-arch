@@ -26,3 +26,7 @@ func (atu *authUseCase) Register(ctx context.Context, payload domain.RegisterPay
 
 	return atu.authRepo.Register(ctx, data)
 }
+
+func (atu *authUseCase) GetUserByUsername(ctx context.Context, username string) (*domain.Register, error) {
+	return atu.authRepo.GetByUsername(ctx, username)
+}
