@@ -26,6 +26,15 @@ func (atu *authUseCase) Register(ctx context.Context, payload domain.RegisterPay
 	return atu.authRepo.Register(ctx, data)
 }
 
+func (atu *authUseCase) Login(ctx context.Context, payload domain.Login) (*domain.User, error) {
+	credentials := domain.Login{
+		Username: payload.Username,
+		Password: payload.Password,
+	}
+
+	return atu.authRepo.Login(ctx, credentials)
+}
+
 func (atu *authUseCase) GetUserByUsername(ctx context.Context, username string) (*domain.User, error) {
 	return atu.authRepo.GetByUsername(ctx, username)
 }

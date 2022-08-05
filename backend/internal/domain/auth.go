@@ -24,6 +24,11 @@ type (
 		Password string             `bson:"password"`
 		Role     string             `bson:"role"`
 	}
+
+	Login struct {
+		Username string `bson:"username"`
+		Password string `bson:"password"`
+	}
 )
 
 func (User) TableName() string {
