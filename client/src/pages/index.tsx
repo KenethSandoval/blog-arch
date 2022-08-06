@@ -8,7 +8,7 @@ type Props = {
   posts: [IPost]
 };
 
-const Home: NextPage<Props> = ({ posts }: Props) => {
+export default function Home ({ posts }: Props) {
     return (
 			<div>
 				<h1 className="text-4xl font-bold mb-4">Documentaciones</h1>
@@ -28,7 +28,8 @@ const Home: NextPage<Props> = ({ posts }: Props) => {
 			</div>
     );
 }
-export default Home
+Home.auth = true;
+// export default Home
 
 export const getStaticProps: GetStaticProps = async () => {
 	const posts = getAllFiles([

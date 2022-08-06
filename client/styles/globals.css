@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Heebo:wght@100;400&display=swap");
+/* TAILWIND */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Nprogress */
+#nprogress {
+  position: relative;
+  z-index: 9999999;
+}
+
+#nprogress .bar {
+  background: var(--orange) !important;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px var(--orange), 0 0 5px var(--orange) !important;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: var(--orange) !important;
+  border-left-color: var(--orange) !important;
+}
