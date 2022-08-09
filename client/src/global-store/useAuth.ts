@@ -1,57 +1,49 @@
-import { combine, devtools, persist } from "zustand/middleware";
 import create from "zustand";
-import { LoginData, RegisterData } from "@types/auth.response";
+import { LoginData, RegisterData } from "@interface/auth.response";
+
+const redirectKey = "@doc/redirect";
+
+export function setRedirect(redirect: string) {
+	window.sessionStorage.setItem(redirectKey, redirect);
+}
+
+export function getRedirect(): string | null {
+  return window.sessionStorage.getItem(redirectKey);
+}
+
+export function clearRedirect() {
+	window.sessionStorage.removeItem(redirectKey);
+}
 
 interface AuthStateI {
   auth: boolean;
   checking: boolean;
-}
-
-interface AuthMethods {
-  startAuth: (dataLogin: LoginData) => Promise<void>;
+	startAuth: (dataLogin: LoginData) => Promise<void>;
   startRegister: (dataRegister: RegisterData) => Promise<void>;
   startLogout: () => void;
   startChecking: () => void;
 }
 
-export const useAuth = create(
-  devtools(
-    persist(
-      combine<AuthStateI, AuthMethods>(
-        {
-          auth: false,
-          checking: false,
-        },
-        (set) => ({
-          startAuth: async (dataLogin: LoginData) => {
-            try {
-							console.log("start auth")
-            } catch (error) {
-              console.log("error in start Login", error);
-            }
-          },
-          startRegister: async (dataRegister: RegisterData) => {
-            try {
-							console.log("start register")
-            } catch(error) {
-              console.log("error in start Login", error);
-            }
-          },
-          startLogout: () => {
-						console.log("logout")
-          },
-          startChecking: () => {
-            set((state) => ({
-              ...state,
-              auth: false,
-              checking: false,
-            }));
-          },
-        })
-      ),
-      {
-        name: "@fh/info",
-      }
-    )
-  )
+export const useAuth = create<AuthStateI>(
+	(set) => ({
+			auth: false,
+			checking: false,
+			startAuth: async (dataLogin: LoginData) => {
+				try {
+					console.log(dataLogin);
+				} catch (error) {
+					console.log("error is start login", error);
+				}
+			},
+			startRegister: async () => {
+			},
+			startLogout: () => {
+				console.log("logout");
+				set((state) => ({...state, auth: false}));
+			},
+			startChecking: () => {
+				console.log("checking");
+				set((state) => ({...state, auth: false}));
+			}
+	})
 );

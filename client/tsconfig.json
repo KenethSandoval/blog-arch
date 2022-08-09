@@ -24,7 +24,7 @@
     "paths": {
       "@components/*": ["./src/components/*"],
       "@global-store/*": ["./src/global-store/*"],
-      "@types/*": ["./src/types/*"]
+      "@interface/*": ["./src/types/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
