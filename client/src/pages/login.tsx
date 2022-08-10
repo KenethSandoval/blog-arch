@@ -1,6 +1,10 @@
 import Link from 'next/link';
+import { login } from '@service/auth.service';
+
 
 export default function Login() {
+	login();
+
 	return (
 		<div className="flex flex-col p-6 rounded-md sm:p-10 dark:bg-gray-900 dark:text-gray-100">
 			<div className="mb-8 text-center">
