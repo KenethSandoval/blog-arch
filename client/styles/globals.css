@@ -5,6 +5,18 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --purple: #6427bf;
+  --purple-bg: #201536;
+  --purple-dark: #10091f;
+  --purple-light: #9254de;
+  --purple-card: #3b2c5c;
+  --orange: #ff5200;
+  --purple-text: #b47ff4;
+  --light: #fafaff;
+  --blue: #5865f2;
+}
+
 /* Nprogress */
 #nprogress {
   position: relative;

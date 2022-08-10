@@ -18,7 +18,7 @@ export default function Login() {
 					<div>
 						<div className="flex justify-between mb-2">
 							<label className="text-sm">Password</label>
-							<Link href="#">
+							<Link href="/password">
 								<a className="text-xs hover:underline dark:text-gray-400">Forgot password?</a>
 							</Link>
 						</div>
@@ -32,9 +32,7 @@ export default function Login() {
 						<button type="button" className="w-full px-8 py-3 font-semibold rounded-md dark:bg-violet-400 dark:text-gray-900">Sign in</button>
 					</div>
 					<p className="px-6 text-sm text-center dark:text-gray-400">Don't have an account yet?
-						<Link href="#">
 							<a className="hover:underline dark:text-violet-400">Sign up</a>.
-						</Link>
 					</p>
 				</div>
 			</form>
