@@ -30,6 +30,7 @@ func New(cfg *config.Config, dbm *mongodb.MongoDB) *echo.Echo {
 
 	e.POST("/articles", h.CreateArticle)
 	e.POST("/auth/register", h.RegisterUser)
+	e.POST("/auth/login", h.LoginUser)
 
 	return e
 }

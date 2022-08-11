@@ -25,6 +25,16 @@ type (
 		Password string             `json:"password" bson:"password"`
 		Role     string             `json:"role" bson:"role"`
 	}
+
+	LoginPayload struct {
+		Username string `json:"username" bson:"username"`
+		Password string `json:"password" bson:"password"`
+	}
+
+	LoginResponse struct {
+		User  User   `json:"user"`
+		Token string `json:"token"`
+	}
 )
 
 func (User) TableName() string {
