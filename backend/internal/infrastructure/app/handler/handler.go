@@ -11,12 +11,14 @@ type (
 		config   *config.Config
 		validate *validation.Validation
 		aru      port.ArticleUseCase
+		atu      port.AuthUseCase
 	}
 
 	HandlerConfig struct {
 		Config         *config.Config
 		Validator      *validation.Validation
 		ArticleUseCase port.ArticleUseCase
+		AuthUseCase    port.AuthUseCase
 	}
 )
 
@@ -25,5 +27,6 @@ func New(hc HandlerConfig) *Handler {
 		config:   hc.Config,
 		validate: hc.Validator,
 		aru:      hc.ArticleUseCase,
+		atu:      hc.AuthUseCase,
 	}
 }

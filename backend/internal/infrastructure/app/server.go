@@ -17,15 +17,19 @@ func New(cfg *config.Config, dbm *mongodb.MongoDB) *echo.Echo {
 	e.Validator = v
 
 	arr := repository.NewArticleMongo(dbm.GetDB())
+	art := repository.NewAuthMongo(dbm.GetDB())
 
 	aru := usecase.NewArticleUseCase(arr)
+	atu := usecase.NewAuthUseCase(art)
 
 	h := handler.New(handler.HandlerConfig{
 		Validator:      v,
 		ArticleUseCase: aru,
+		AuthUseCase:    atu,
 	})
 
 	e.POST("/articles", h.CreateArticle)
+	e.POST("/auth/register", h.RegisterUser)
 
 	return e
 }
