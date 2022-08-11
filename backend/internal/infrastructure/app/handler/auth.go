@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/KenethSandoval/doc-md/internal/domain"
+	"github.com/KenethSandoval/doc-md/pkg/bcrypt"
 	"github.com/labstack/echo/v4"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
@@ -17,7 +18,19 @@ func (h *Handler) RegisterUser(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
+	user, _ := h.atu.GetUserByUsername(ctx, payload.Username)
+	if user != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Username already exists")
+	}
+
+	passwordEncrypt, err := bcrypt.HashPassword(payload.Password)
+
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+	}
+
 	payload.ID = primitive.NewObjectID()
+	payload.Password = passwordEncrypt
 
 	if err := h.atu.RegisterUser(ctx, payload); err != nil {
 		return echo.ErrInternalServerError
