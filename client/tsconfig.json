@@ -25,7 +25,8 @@
       "@components/*": ["./src/components/*"],
       "@global-store/*": ["./src/global-store/*"],
       "@interface/*": ["./src/types/*"],
-			"@service/*": ["./src/services/*"]
+			"@service/*": ["./src/services/*"],
+			"@libs/*": ["./src/lib/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
