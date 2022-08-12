@@ -5,6 +5,7 @@ import (
 	"github.com/KenethSandoval/doc-md/internal/config"
 	"github.com/KenethSandoval/doc-md/internal/domain/usecase"
 	"github.com/KenethSandoval/doc-md/internal/infrastructure/app/handler"
+	"github.com/KenethSandoval/doc-md/internal/infrastructure/middle"
 	"github.com/KenethSandoval/doc-md/internal/infrastructure/mongodb"
 	"github.com/KenethSandoval/doc-md/pkg/validation"
 	echo "github.com/labstack/echo/v4"
@@ -15,6 +16,8 @@ func New(cfg *config.Config, dbm *mongodb.MongoDB) *echo.Echo {
 	v := validation.New()
 
 	e.Validator = v
+
+	e.Use(middle.CORS())
 
 	arr := repository.NewArticleMongo(dbm.GetDB())
 	art := repository.NewAuthMongo(dbm.GetDB())
