@@ -25,7 +25,6 @@
       "@components/*": ["./src/components/*"],
       "@global-store/*": ["./src/global-store/*"],
       "@interface/*": ["./src/types/*"],
-			"@proto/*": ["./src/pb/*"],
 			"@service/*": ["./src/services/*"]
     }
   },
