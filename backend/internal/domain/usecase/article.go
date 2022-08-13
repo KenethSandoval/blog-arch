@@ -17,8 +17,9 @@ func NewArticleUseCase(aru port.ArticleRepository) port.ArticleUseCase {
 
 func (aru *articleUseCase) CreateArticle(ctx context.Context, payload domain.ArticleCreatePayload) error {
 	data := domain.Article{
-		ID:    payload.ID,
-		Title: payload.Title,
+		ID:      payload.ID,
+		Title:   payload.Title,
+		Content: payload.Content,
 	}
 	return aru.articleRepo.Create(ctx, data)
 }

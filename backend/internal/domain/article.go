@@ -12,13 +12,15 @@ var (
 
 type (
 	Article struct {
-		ID    primitive.ObjectID `json:"id" bson:"_id"`
-		Title string             `json:"title" bson:"title,omitempty"`
+		ID      primitive.ObjectID `json:"id" bson:"_id"`
+		Title   string             `json:"title" bson:"title,omitempty"`
+		Content string             `json:"content" bson:"content,omitempty"`
 	}
 
 	ArticleCreatePayload struct {
-		ID    primitive.ObjectID `json:"id"`
-		Title string             `json:"title" validate:"required"`
+		ID      primitive.ObjectID `json:"id"`
+		Title   string             `json:"title" validate:"required"`
+		Content string             `json:"content" validate:"required"`
 	}
 )
 
