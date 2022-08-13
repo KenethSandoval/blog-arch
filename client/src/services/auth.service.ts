@@ -14,4 +14,5 @@ export const setTokenApi = (token: string) => {
 	}
 }
 
+export const checkUserLogged = () => !!localStorage.getItem(USERTOKEN);
 

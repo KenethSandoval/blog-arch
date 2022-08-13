@@ -52,7 +52,7 @@ export const useAuth = create<AuthStateI>(
 			},
 			startChecking: () => {
 				console.log("checking");
-				set((state) => ({...state, auth: false}));
+				set((state) => ({...state, auth: true}));
 			}
 	})
 );

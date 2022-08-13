@@ -1,5 +1,5 @@
 import { IPost } from "../types/post";
-import type { NextPage, GetStaticProps } from 'next';
+import type { GetStaticProps } from 'next';
 import { getAllFiles } from '../lib/mdx';
 import Thumbnail from "../components/Thumbnail";
 

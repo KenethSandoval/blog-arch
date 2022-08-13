@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import { setRedirect, useAuth } from "@global-store/useAuth"
-// import { useAuth } from "./AuthProvider";
 
 interface Props {
 	children: React.ReactNode;
@@ -16,6 +15,7 @@ export const AuthGuard: React.FC<Props> = ({ children }: Props) => {
 				setRedirect(router.route);
 				router.push("/login");
 			}
+		console.log(checking);
 	}, [checking, router]);
 
 	/* show loading indicator while the auth provider is still isLoading */
