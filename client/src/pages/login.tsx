@@ -1,11 +1,20 @@
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useState } from 'react';
-import { login } from '@service/auth.service';
+import { useRouter } from "next/router";
 import { LoginData } from '@interface/auth.response';
+import { useAuth } from '@global-store/useAuth';
 
 export default function Login() {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
+
+	const { startAuth, auth } = useAuth((state) => state);
+	const router = useRouter();
+  useEffect(() => {
+    if (auth) {
+      router.replace("/");
+    }
+  }, [auth, router]);
 
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
@@ -13,11 +22,11 @@ export default function Login() {
 				username,
 				password
 		}
-	  await login(payload);	
+		await startAuth(payload);
 	}
 
 	return (
-		<div className="flex flex-col p-6 rounded-md sm:p-10 dark:bg-gray-900 dark:text-gray-100">
+		<div className="flex flex-col p-6 rounded-md sm:p-10 dark:bg-gray-900 dark:text-gray-100 mt-6">
 			<div className="mb-8 text-center">
 				<h1 className="my-3 text-4xl font-bold">Sign in</h1>
 				<p className="text-sm dark:text-gray-400">Sign in to access your account</p>
@@ -47,7 +56,7 @@ export default function Login() {
 						<button type="submit" className="w-full px-8 py-3 font-semibold rounded-md dark:bg-violet-400 dark:text-gray-900">Sign in</button>
 					</div>
 					<p className="px-6 text-sm text-center dark:text-gray-400">Don't have an account yet?
-							<a className="hover:underline dark:text-violet-400">Sign up</a>.
+							<a className="hover:underline dark:text-violet-400 cursor-pointer ml-3">Sign up</a>.
 					</p>
 				</div>
 			</form>

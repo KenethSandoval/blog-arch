@@ -1,5 +1,6 @@
 import create from "zustand";
 import { LoginData, RegisterData } from "@interface/auth.response";
+import { login, setTokenApi } from '@service/auth.service';
 
 const redirectKey = "@doc/redirect";
 
@@ -30,7 +31,15 @@ export const useAuth = create<AuthStateI>(
 			checking: false,
 			startAuth: async (dataLogin: LoginData) => {
 				try {
-					console.log(dataLogin);
+					const response = await login(dataLogin);
+
+					set((state) => ({
+						...state,
+						auth: !state.auth,
+						checking: true,
+					}));
+					
+					setTokenApi(response.data);
 				} catch (error) {
 					console.log("error is start login", error);
 				}
