@@ -33,18 +33,18 @@ export default function MyApp(props: AppProps) {
     return (
 			<>
 				<ThemeProvider enableSystem={true} attribute="class">
-					<MdxComponentsProvider>
-				  	<Layout>
 							{Component.auth ? (
 								<AuthGuard>
-			    				<Component {...pageProps} />
+									<MdxComponentsProvider>
+				  					<Layout>
+			    						<Component {...pageProps} />
+			  						</Layout>
+									</MdxComponentsProvider>
 								</AuthGuard>
 							) : (
 			    				<Component {...pageProps} />
 							)
 							}
-			  		</Layout>
-					</MdxComponentsProvider>
 				</ThemeProvider>
 			</>
 		);

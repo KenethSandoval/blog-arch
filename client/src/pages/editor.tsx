@@ -1,89 +1,128 @@
-import "@uiw/react-md-editor/markdown-editor.css";
-import "@uiw/react-markdown-preview/markdown.css";
-import dynamic from "next/dynamic";
-import {  useState } from "react";
-import { commands, ICommand, TextState, TextAreaTextApi } from "@uiw/react-md-editor";
-import { newArticle } from "@service/article.service";
-import { Article } from "@interface/article";
-
-const MDEditor = dynamic(
-  () => import("@uiw/react-md-editor"),
-  { ssr: false }
-);
-
-const title3: ICommand = {
-  name: "title3",
-  keyCommand: "title3",
-  buttonProps: { "aria-label": "Insert title3" },
-  icon: (
-    <svg width="12" height="12" viewBox="0 0 520 520">
-      <path
-        fill="currentColor"
-        d="M15.7083333,468 C7.03242448,468 0,462.030833 0,454.666667 L0,421.333333 C0,413.969167 7.03242448,408 15.7083333,408 L361.291667,408 C369.967576,408 377,413.969167 377,421.333333 L377,454.666667 C377,462.030833 369.967576,468 361.291667,468 L15.7083333,468 Z M21.6666667,366 C9.69989583,366 0,359.831861 0,352.222222 L0,317.777778 C0,310.168139 9.69989583,304 21.6666667,304 L498.333333,304 C510.300104,304 520,310.168139 520,317.777778 L520,352.222222 C520,359.831861 510.300104,366 498.333333,366 L21.6666667,366 Z M136.835938,64 L136.835937,126 L107.25,126 L107.25,251 L40.75,251 L40.75,126 L-5.68434189e-14,126 L-5.68434189e-14,64 L136.835938,64 Z M212,64 L212,251 L161.648438,251 L161.648438,64 L212,64 Z M378,64 L378,126 L343.25,126 L343.25,251 L281.75,251 L281.75,126 L238,126 L238,64 L378,64 Z M449.047619,189.550781 L520,189.550781 L520,251 L405,251 L405,64 L449.047619,64 L449.047619,189.550781 Z"
-      />
-    </svg>
-  ),
-  execute: (state: TextState, api: TextAreaTextApi) => {
-    let modifyText = `### ${state.selectedText}\n`;
-    if (!state.selectedText) {
-      modifyText = `### `;
-    }
-    api.replaceSelection(modifyText);
-  }
-};
+import {  useState} from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import FileList from "../components/FileList"
+import Nav from "../components/Nav"
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import atomDark from 'react-syntax-highlighter/dist/cjs/styles/prism/atom-dark';
 
 export default function Editor() {
-	const [value, setValue] = useState("**Hello world!!!**");
- 
+	const [show, setShow] = useState(false);
+	const [displayWindow, setDisplayWindow] = useState(false);
+	const [newFile, setNewFile] = useState("");
+	const [value, setValue] = useState("");
+
+  const createStory = () => {
+			console.log(newFile);
+	}
+
+  const setFile = (dat: boolean) => {
+		setDisplayWindow(dat)
+	}
+
+  const handleChange = (e:any) => {
+		setNewFile(e.target.value);
+	}
+
+	const handleInputChange = (e:any) => {
+			setValue(e.target.value)
+	}
+	
  	return (
-    <div className="container">
-      <MDEditor
-        value={value}
-        onChange={(val) => {
-          setValue(val!);
-        }}
-        commands={[
-          // Custom Toolbars
-          title3,
-          commands.group(
-            [
-              commands.title1,
-              commands.title2,
-              commands.title3,
-              commands.title4,
-              commands.title5,
-              commands.title6
-            ],
-            {
-              name: "title",
-              groupName: "title",
-              buttonProps: { "aria-label": "Insert title" }
-            }
-          ),
-          commands.divider,
-          commands.group([], {
-            name: "update",
-            groupName: "update",
-            icon: (
-						<svg width="12" height="12" viewBox="0 0 20 20">
-							<path d="M17.064,4.656l-2.05-2.035C14.936,2.544,14.831,2.5,14.721,2.5H3.854c-0.229,0-0.417,0.188-0.417,0.417v14.167c0,0.229,0.188,0.417,0.417,0.417h12.917c0.229,0,0.416-0.188,0.416-0.417V4.952C17.188,4.84,17.144,4.733,17.064,4.656M6.354,3.333h7.917V10H6.354V3.333z M16.354,16.667H4.271V3.333h1.25v7.083c0,0.229,0.188,0.417,0.417,0.417h8.75c0.229,0,0.416-0.188,0.416-0.417V3.886l1.25,1.239V16.667z M13.402,4.688v3.958c0,0.229-0.186,0.417-0.417,0.417c-0.229,0-0.417-0.188-0.417-0.417V4.688c0-0.229,0.188-0.417,0.417-0.417C13.217,4.271,13.402,4.458,13.402,4.688"></path>
-						</svg>
-            ), 
-            execute: async (
-              state: commands.TextState,
-              api: commands.TextAreaTextApi
-            ) => {
-							const data: Article = {
-									title: "Hello_react",
-									content:  state.text
-							};
-							const response = await newArticle(data);
-              console.log(response);
-            },
-            buttonProps: { "aria-label": "Insert title" }
-          })
-        ]}
-      />
-    </div>
+		<>
+			<Nav display={setFile}/>
+			<div className="relative bg-slate-900">
+				<div className="relative h-full flex flex-row pt-28">
+					<FileList />
+					<div className="w-3/4 border border-slate-900 py-8 px-8">
+						<button
+							className="cursor-pointer relative text-blue-500 font-semibold text-md"
+							onClick={() => {
+								setShow(!show);
+							}}
+						>
+							{show ? "Edit" : "Preview"}
+						</button>
+						{!show ? (
+								<textarea 
+									className="bg-slate-900 fullheight w-full relative outline-none text-white border-0 pt-6"
+									placeholder="Markdown here"
+									value={value}
+									onChange={handleInputChange}
+								/>
+							) : (
+								// preview window
+              	<div className="bg-slate-900 h-full w-full text-white editor">
+                	<ReactMarkdown 
+									  remarkPlugins={[remarkGfm]}
+										components={{
+      								code({node, inline, className, children, ...props}) {
+        								const match = /language-(\w+)/.exec(className || '')
+        								return !inline && match ? (
+          								<SyntaxHighlighter
+            								children={String(children).replace(/\n$/, '')}
+														style={atomDark}
+            								language={match[1]}
+            								PreTag="div" 
+														{...props}
+          								/>
+          							) : (
+            						<code className={className} {...props}>
+              						{children} 
+												</code>
+          						);
+        						},
+      						}}
+									>
+                  	{value}
+                	</ReactMarkdown>
+              	</div>
+							)}
+					</div>
+				</div>
+				{/* new file creation window */}
+				{displayWindow ? (
+					<div className="absolute h-full w-full flex justify-center items-center top-0 backdrop-blur-lg">
+						<div className="bg-blue-500 roundend-lg p-4">
+							<div className="flex flex-col justify-center items-center gap-8">
+                <div className=" relative w-full flex flex-row justify-between">
+                  <h1 className=" font-medium uppercase text-white">
+                    Create a New File
+                  </h1>
+                  <button
+                    onClick={() => {
+                      setDisplayWindow(false);
+                    }}
+                  >
+                    Close
+                  </button>
+                </div>
+								<div className="flex flex-row gap-2 justify-center items-center">
+									<div className="flex-1">
+										<input
+											className="roundend-lg p-4 text-black"
+											type="text"
+											placeholder="File name"
+											value={newFile}
+											onChange={handleChange}
+										/>
+									</div>
+									<div className="flex-1">
+									   <button
+                      className="text-white bg-slate-900 px-4 py-3 rounded-md"
+                      onClick={() => {
+                        createStory();
+                      }}
+                    >
+                      Create File
+                    </button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				): null}
+			</div>
+		</>
   );
 }
