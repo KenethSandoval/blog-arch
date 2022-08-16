@@ -40,19 +40,33 @@ func (h *Handler) CreateArticle(c echo.Context) error {
 }
 
 func createReadmeArticle(nameFile, content string) error {
-	file, err := os.Create(nameFile + ".md")
+	path := "/home/stivarch/Escritorio/gnu/projects/documentation-md/client/src/_posts/" + nameFile + ".mdx"
+
+	headContent := fmt.Sprintf(`
+---
+date: '2021-11-25'
+title: %s
+description: A quick guide into Next.js and Typescript with deployment to vercel
+prerequisites: ['Node.js installed on your computer', 'Basic knowledge working with Next.js and TypeScript']
+stacks: ['Next.js','TypeScript','Git']
+---
+
+<Prerequisites />
+
+<Stacks /> %s`, nameFile, "\n\n")
+
+	file, err := os.Create(path)
 	if err != nil {
 		return err
 	}
 
 	defer file.Close()
 
-	data := []byte(content)
+	data := []byte(headContent + content)
 
 	if _, err := file.Write(data); err != nil {
 		return err
 	}
 
-	fmt.Println("Done!")
 	return nil
 }
