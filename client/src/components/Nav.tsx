@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 
 interface Props {
-	display: any
+	display: any;
+	save: any;
 };
 
 
-const Nav: React.FC<Props> = ({ display }: Props) => {
+const Nav: React.FC<Props> = ({ display, save }: Props) => {
   const [open, isOpen] = useState(false);
 	let toggler = false;
 
@@ -33,8 +34,10 @@ const Nav: React.FC<Props> = ({ display }: Props) => {
                     Create new file
                   </button>
                   <button
-                    className="bg-blue-500 inline-flex items-center justify-center py-2  px-4 rounded-md text-white outline-none "
-                   
+                    className="bg-blue-500 inline-flex items-center justify-center py-2  px-4 rounded-md text-white outline-none"            
+										onClick={() => {
+												save();
+										}}
                   >
                     Save
                   </button>

@@ -28,7 +28,6 @@ export default function Home ({ posts }: Props) {
 			</div>
     );
 }
-Home.auth = true;
 // export default Home
 
 export const getStaticProps: GetStaticProps = async () => {

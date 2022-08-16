@@ -13,9 +13,8 @@ export const AuthGuard: React.FC<Props> = ({ children }: Props) => {
 	useEffect(() => {
 		if (!checking) {
 				setRedirect(router.route);
-				router.push("/login");
+				// router.push("/login");
 			}
-		console.log(checking);
 	}, [checking, router]);
 
 	/* show loading indicator while the auth provider is still isLoading */

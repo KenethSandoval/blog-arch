@@ -1,10 +1,13 @@
-import {  useState} from "react";
+import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import FileList from "../components/FileList"
 import Nav from "../components/Nav"
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import atomDark from 'react-syntax-highlighter/dist/cjs/styles/prism/atom-dark';
+
+import { newArticle } from "@service/article.service";
+import { Article } from "@interface/article";
 
 export default function Editor() {
 	const [show, setShow] = useState(false);
@@ -13,7 +16,7 @@ export default function Editor() {
 	const [value, setValue] = useState("");
 
   const createStory = () => {
-			console.log(newFile);
+			setDisplayWindow(false)
 	}
 
   const setFile = (dat: boolean) => {
@@ -27,10 +30,20 @@ export default function Editor() {
 	const handleInputChange = (e:any) => {
 			setValue(e.target.value)
 	}
+
+	const handleSave = async () => {
+		const data: Article = {
+			title: newFile,
+			content: value
+		};
+
+		const response = await newArticle(data);
+		console.log(response);
+	}
 	
  	return (
 		<>
-			<Nav display={setFile}/>
+			<Nav display={setFile} save={handleSave}/>
 			<div className="relative bg-slate-900">
 				<div className="relative h-full flex flex-row pt-28">
 					<FileList />
@@ -126,3 +139,5 @@ export default function Editor() {
 		</>
   );
 }
+
+Editor.auth = true;
