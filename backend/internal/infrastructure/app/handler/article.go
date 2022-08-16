@@ -27,7 +27,7 @@ func (h *Handler) CreateArticle(c echo.Context) error {
 	// call usecase of business logic
 	payload.ID = primitive.NewObjectID()
 
-	err := createReadmeArticle(payload.Title, payload.Content)
+	err := createReadmeArticle(payload)
 	if err != nil {
 		return echo.ErrInternalServerError
 	}
@@ -39,11 +39,10 @@ func (h *Handler) CreateArticle(c echo.Context) error {
 	return c.JSON(http.StatusCreated, "CREATED")
 }
 
-func createReadmeArticle(nameFile, content string) error {
-	path := "/home/stivarch/Escritorio/gnu/projects/documentation-md/client/src/_posts/" + nameFile + ".mdx"
+func createReadmeArticle(metadata domain.ArticleCreatePayload) error {
+	path := "/home/stivarch/Escritorio/gnu/projects/documentation-md/client/src/_posts/" + metadata.NameFile + ".mdx"
 
-	headContent := fmt.Sprintf(`
----
+	headContent := fmt.Sprintf(`---
 date: '2021-11-25'
 title: %s
 description: A quick guide into Next.js and Typescript with deployment to vercel
@@ -53,7 +52,7 @@ stacks: ['Next.js','TypeScript','Git']
 
 <Prerequisites />
 
-<Stacks /> %s`, nameFile, "\n\n")
+<Stacks /> %s`, metadata.Title, "\n\n")
 
 	file, err := os.Create(path)
 	if err != nil {
@@ -62,7 +61,7 @@ stacks: ['Next.js','TypeScript','Git']
 
 	defer file.Close()
 
-	data := []byte(headContent + content)
+	data := []byte(headContent + metadata.Content)
 
 	if _, err := file.Write(data); err != nil {
 		return err
