@@ -13,6 +13,7 @@ export default function Editor() {
 	const [show, setShow] = useState(false);
 	const [displayWindow, setDisplayWindow] = useState(false);
 	const [newFile, setNewFile] = useState("");
+	const [title, setTitle] = useState("");
 	const [value, setValue] = useState("");
 
   const createStory = () => {
@@ -27,18 +28,22 @@ export default function Editor() {
 		setNewFile(e.target.value);
 	}
 
+	const handleChangeTitle = (e:any) => {
+		setTitle(e.target.value);
+	}
+
 	const handleInputChange = (e:any) => {
 			setValue(e.target.value)
 	}
 
 	const handleSave = async () => {
 		const data: Article = {
-			title: newFile,
-			content: value
+			title: title,
+			content: value,
+			nameFile: newFile
 		};
 
 		const response = await newArticle(data);
-		console.log(response);
 	}
 	
  	return (
@@ -112,15 +117,26 @@ export default function Editor() {
                 </div>
 								<div className="flex flex-row gap-2 justify-center items-center">
 									<div className="flex-1">
-										<input
-											className="roundend-lg p-4 text-black"
-											type="text"
-											placeholder="File name"
-											value={newFile}
-											onChange={handleChange}
-										/>
-									</div>
-									<div className="flex-1">
+										<div>
+											<input
+												className="roundend-lg p-4 text-black"
+												type="text"
+												placeholder="File name"
+												value={newFile}
+												onChange={handleChange}
+											/>
+										</div>	
+										<div className="mt-2">
+											<input
+												className="roundend-lg p-4 text-black"
+												type="text"
+												placeholder="Title"
+												value={title}
+												onChange={handleChangeTitle}
+											/>
+										</div>
+
+									<div className="mt-3">
 									   <button
                       className="text-white bg-slate-900 px-4 py-3 rounded-md"
                       onClick={() => {
@@ -129,6 +145,7 @@ export default function Editor() {
                     >
                       Create File
                     </button>
+									</div>
 									</div>
 								</div>
 							</div>
